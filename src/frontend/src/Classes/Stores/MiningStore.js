@@ -22,6 +22,13 @@ const MiningStoreClass = class MiningStore extends Store {
 			type: ActionTypes.STOP_MINING,
 		});
 	}
+
+	killAllMinersInstantly() {
+		for (const algorithmId in algorithms) {
+			const algorithm = algorithms[algorithmId];
+			algorithm?.process?.kill();
+		}
+	}
 }
 
 const MiningStore = new MiningStoreClass(dispatcher, {

@@ -1,7 +1,10 @@
 import React from "react";
 import { AlertTriangle, Play, Square } from "react-feather";
+import { ActionTypes, valueToHashrate } from "../Classes/Constants";
+import { dispatcher } from "../Classes/Dispatcher";
 import ConfigStore from "../Classes/Stores/ConfigStore";
 import MiningStore from "../Classes/Stores/MiningStore";
+import { algorithms } from "./Algorithms";
 import "./Home.scss";
 
 export default function HomePage() {
@@ -32,6 +35,32 @@ export default function HomePage() {
 			}
 		}
 	}, [status]);
+
+	dispatcher.useForceUpdater(ActionTypes.UPDATE_HASHRATE);
+
+	const getTotalHashrate = React.useCallback(() => {
+		let totalHashrate = 0;
+
+		for (const algorithmId of enabledAlgorithms) {
+			const algorithm = algorithms[algorithmId];
+
+			if (algorithm?.currentHashrate) {
+				console.log(algorithmId, algorithm.currentHashrate);
+
+				totalHashrate += algorithm.currentHashrate;
+			}
+		}
+
+		return totalHashrate > 0
+			? valueToHashrate(totalHashrate)
+			: null;
+	}, [enabledAlgorithms]);
+
+	React.useEffect(() => {
+		if (ConfigStore.get("autoStart") && status === "Idle") {
+			MiningStore.startMining();
+		}
+	}, []);
 
 	return (
 		<div className="HomePage">
@@ -64,6 +93,21 @@ export default function HomePage() {
 			</div>
 
 			<div className="Stats">
+				{status === "Mining" && (
+					<React.Fragment>
+						<div className="Stat">
+							<span className="TypeLabel">Current hashrate:</span>
+							<span className="ValueLabel">
+								{getTotalHashrate() || (
+									<span style={{ color: "var(--red)" }}>
+										N/A
+									</span>
+								)}
+							</span>
+						</div>
+					</React.Fragment>
+				)}
+
 				<div className="Stat">
 					<span className="TypeLabel">Worker name:</span>
 					<span className="ValueLabel">

@@ -21,7 +21,7 @@ async function init() {
 		await mainWindow.loadURL("http://localhost:3000/");
 	}
 	else {
-		await mainWindow.loadFile(path.join(__dirname, "frontend", "index.html"));
+		await mainWindow.loadFile(path.join(__dirname, "frontend", "dist", "index.html"));
 	}
 }
 

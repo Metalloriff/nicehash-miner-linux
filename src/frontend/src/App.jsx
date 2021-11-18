@@ -1,6 +1,7 @@
 import React from "react";
 import { ExternalLink } from "react-feather";
 import "./App.scss";
+import MiningStore from "./Classes/Stores/MiningStore";
 import RoutesStore from "./Classes/Stores/RoutesStore";
 import LinkWrapper from "./Components/InternalLinkWrapper";
 import AlgorithmsPage from "./Pages/Algorithms";
@@ -19,6 +20,10 @@ function PageElement() {
 		case "settings": return <SettingsPage />;
 	}
 }
+
+window.addEventListener("beforeunload", () => {
+	MiningStore.killAllMinersInstantly();
+});
 
 export default function App() {
 	RoutesStore.useState(() => RoutesStore.getCurrentRoute());

@@ -1,4 +1,6 @@
 import React from "react";
+import { ActionTypes, hashrateToValue } from "../Classes/Constants";
+import { dispatcher } from "../Classes/Dispatcher";
 import ConfigStore from "../Classes/Stores/ConfigStore";
 import LogsStore from "../Classes/Stores/LogsStore";
 import MiningStore from "../Classes/Stores/MiningStore";
@@ -14,6 +16,7 @@ export const algorithms = {
 		github: "https://github.com/nanopool/phoenix-miner",
 		recommended: true,
 		type: "GPU",
+		getHashrate: input => /speed: ((\d|\.)+ MH\/s)/im.exec(input)?.[1],
 
 		getApp() {
 			const config = ConfigStore.getConfig();
@@ -84,8 +87,7 @@ export const algorithms = {
 			return {
 				cmd: "kawpowminer",
 				args: [
-					["-pool", `stratum+tcp://${config.walletAddress}.${config.workerName.split(" ").join("-")}@kawpow.${config.location}.nicehash.com:3385`],
-
+					["-pool", `stratum+tcp://${config.walletAddress}.${config.workerName.split(" ").join("-")}@kawpow.${config.location}.nicehash.com:3385`]
 				]
 			}
 		}
@@ -104,6 +106,18 @@ export function startAlgorithm(algorithmId) {
 		console.log(`[${algorithm.name} miner] stdout: ${data}`);
 
 		LogsStore.pushLog("info", `[${algorithm.name}]: ${data}`);
+
+		const hashrate = algorithm.getHashrate?.(data);
+
+		if (hashrate && algorithm.currentHashrate != hashrate) {
+			algorithm.currentHashrate = hashrateToValue(hashrate);
+
+			dispatcher.dispatch({
+				type: ActionTypes.UPDATE_HASHRATE,
+				algorithmId,
+				hashrate: algorithm.currentHashrate
+			});
+		}
 	});
 
 	algorithm.process.stderr.on("data", data => {

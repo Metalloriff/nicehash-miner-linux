@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "src/index.js",
 	"scripts": {
-		"start": "npx electron . --dev"
+		"start": "npx electron . --dev",
+		"build": "electron-builder -l"
 	},
 	"keywords": [],
 	"author": "Metalloriff",
@@ -19,7 +20,21 @@
 		"sucrase": "^3.20.1"
 	},
 	"devDependencies": {
-		"electron": "^13.2.2"
+		"electron": "^13.2.2",
+		"electron-builder": "^22.13.1"
+	},
+	"build": {
+		"productName": "NiceHash Miner",
+		"artifactName": "NiceHashMiner-${version}.${ext}",
+		"appId": "com.metalloriff.linuxnicehashminer",
+		"files": [
+			"./src/index.js",
+			"./src/frontend/dist/*",
+			"./src/frontend/dist/**/*"
+		],
+		"linux": {
+			"target": "AppImage"
+		}
 	},
 	"homepage": "./"
 }

@@ -8,6 +8,7 @@ const config = _.extend({
 	workerName: "linux-miner",
 	location: "usa",
 	enabledAlgorithms: [],
+	autoStart: false
 }, JSON.parse(window.localStorage.getItem("config") || "{}"));
 
 const ConfigStoreClass = class ConfigStore extends Store {

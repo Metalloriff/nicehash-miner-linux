@@ -21,11 +21,11 @@ module.exports = env => ({
 	mode: "development",
 	entry: "./src/index.jsx",
 	output: {
-		path: path.join(__dirname, "docs"),
+		path: path.join(__dirname, "dist"),
 		filename: "assets/scripts/[name].js",
 		chunkFilename: "assets/scripts/[name].js",
 		assetModuleFilename: "assets/media/[name][ext]",
-		publicPath: "/"
+		publicPath: "./"
 	},
 	module: {
 		rules: [
