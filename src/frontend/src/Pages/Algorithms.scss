@@ -1,0 +1,57 @@
+.AlgorithmsPage {
+	> .CategoryLabel {
+		margin-left: 20px;
+		margin-bottom: 0;
+
+		font-weight: 300;
+		text-transform: uppercase;
+
+		&:not(:first-child) {
+			margin-top: 50px;
+		}
+	}
+
+	> .Algorithm {
+		padding: 20px;
+
+		> .Header {
+			> .Name {
+				width: 40vw;
+				margin-bottom: 5px;
+
+				justify-content: flex-start;
+
+				> .TypeTag {
+					padding: 3px 12px;
+					font-size: 0.6em;
+
+					margin-left: 10px;
+					border-radius: 100px;
+
+					color: var(--tertiary-bg);
+				}
+			}
+
+			> .SwitchItem {
+				margin-right: auto;
+			}
+		}
+
+		&:not(.Installed) {
+			> .Header {
+				opacity: 0.5;
+				filter: saturate(0);
+				cursor: not-allowed;
+
+				> * {
+					pointer-events: none;
+				}
+			}
+		}
+
+		> .Url {
+			display: block;
+			cursor: pointer;
+		}
+	}
+}

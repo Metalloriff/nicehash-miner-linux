@@ -1,0 +1,18 @@
+.LogsPage {
+	> .Messages {
+		display: flex;
+		flex-direction: column-reverse;
+
+		max-height: 90vh;
+		overflow-y: auto;
+
+		padding: 20px;
+		box-sizing: border-box;
+
+		> .Message {
+			&.error {
+				color: var(--red);
+			}
+		}
+	}
+}

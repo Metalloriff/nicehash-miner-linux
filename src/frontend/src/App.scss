@@ -1,0 +1,109 @@
+@import "./Variables.scss";
+
+:root {
+	--primary-color: #fbc241;
+	--secondary-color: #7542ff;
+
+	--primary-bg: #010d15;
+	--secondary-bg: #031a2a;
+	--tertiary-bg: #052339;
+
+	--red: #e92424;
+	--blue: #128ede;
+	--green: #68b641;
+
+	--primary-border-radius: 0;
+	--secondary-border-radius: 15px;
+	--text-color: #dfdfef;
+
+	--darken-bg: rgba(0, 0, 0, 0.2);
+}
+
+html {
+	background-color: $primaryBG;
+	color: var(--text-color);
+
+	min-height: 100vh;
+
+	user-select: none;
+	overflow-x: hidden;
+}
+
+// Comment this and line 31-32 out for the Verdana font
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap");
+
+body {
+	font-family: Inter, Verdana, Geneva, Tahoma, sans-serif;
+	// font-family: Helvetica, Arial, sans-serif;
+	letter-spacing: 0.05ch;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	margin: 0;
+}
+
+::-webkit-scrollbar {
+	background: rgba(black, 0.1);
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: $primaryColor;
+	border-radius: 10px;
+}
+
+a:not(.LinkWrapper) {
+	color: $primaryColor;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.Tabs {
+	padding: 10px;
+	width: 100vw;
+	box-sizing: border-box;
+
+	display: flex;
+
+	> .Tab {
+		margin: 10px;
+		padding-bottom: 7px;
+		color: var(--text-color);
+
+		border-bottom: 2px solid transparent;
+		gap: 5px;
+
+		&.Selected {
+			color: var(--primary-color);
+			border-color: currentColor;
+		}
+
+		> svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+}
+
+// Some boilerplate stuff for the lazies.
+
+.Flex {
+	display: flex;
+}
+
+.FlexCenter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.AbsoluteCover {
+	position: absolute;
+
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
